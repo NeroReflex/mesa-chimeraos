@@ -19,7 +19,7 @@ pkgname=(
 )
 _mesaver=24.1.1
 pkgver=${_mesaver//-/.}.chos1
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc="Open-source OpenGL drivers"
 url="https://www.mesa3d.org/"
@@ -35,7 +35,7 @@ makedepends=(
   'libglvnd'
   'libva'
   'libvdpau'
-  'libunwind'
+  #'libunwind' # libunwind is disabled
   'libx11'
   'libxcb'
   'libxext'
@@ -73,7 +73,7 @@ makedepends=(
   'xorgproto'
 
   # valgrind deps
-  'valgrind'
+  #'valgrind'
 )
 options=(
   # GCC 14 LTO causes segfault in LLVM under si_llvm_optimize_module
@@ -165,10 +165,11 @@ build() {
     -D microsoft-clc=disabled
     -D osmesa=true
     -D platforms=x11,wayland
-    -D valgrind=enabled
+    -D valgrind=disabled
     -D video-codecs=all
     -D vulkan-drivers=amd,intel,intel_hasvk,swrast,nouveau
     -D vulkan-layers=device-select,intel-nullhw,overlay
+    --buildtype=release
   )
 
   # Build only minimal debug info to reduce size
